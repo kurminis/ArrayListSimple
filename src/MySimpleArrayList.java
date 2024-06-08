@@ -46,8 +46,8 @@ public class MySimpleArrayList<E> implements List<E> {
 
     @Override
     public boolean add(E e) {
-        data[indexOfData++] = e;
-        return true;
+         data[indexOfData++] = e;
+         return true;
     }
 
     @Override
@@ -67,7 +67,37 @@ public class MySimpleArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return false;
+        Object[] col = c.toArray();
+        int length = 0;
+        if (indexOfData == 0)
+        {
+            length = col.length;
+        }
+        else {
+            length = data.length + c.size();
+        }
+        Object[] newData = new Object[length];
+
+        if (indexOfData == 0)
+        {
+            for (int i = 0; i < newData.length; i++)
+            {
+                newData[i] = col[i];
+            }
+        }
+        else {
+            for (int i = 0; i < data.length; i++) {
+                newData[i] = data[i];
+            }
+
+            int index = data.length;
+            for (int i = 0; i < col.length; i++) {
+                newData[index] = col[i];
+                index++;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -113,8 +143,9 @@ public class MySimpleArrayList<E> implements List<E> {
         {
             length = length + 10;
         }
-        if (checkIndex(index) || (index - indexOfData) == 1)
+        if (checkIndex(index) || (index - indexOfData) == 0)
         {
+            System.out.println(indexOfData + "===" + (index-indexOfData));
             newData = new Object[length];
             int j = 0;
             for (int i = 0; i <= indexOfData + 1; i++)
@@ -128,7 +159,10 @@ public class MySimpleArrayList<E> implements List<E> {
                 j++;
             }
             data = newData;
+
             indexOfData++;
+            System.out.println("indexOfData = " + indexOfData);
+
         }
 
 
